@@ -275,6 +275,15 @@ The gate distribution plots (saved as `plots/gate_dist_{lambda}.png`) show the h
 | 1e-02 | Heavily dominated by 0 spike | 99.99% at ~0 | Trace near 1 |
 | 1e-01 | Single spike at 0 | 100.00% at ~0 | None visible |
 
+#### λ = 1e-03
+![Gate Distribution λ=1e-03](assets/plot_1e-03.png)
+
+#### λ = 1e-02 *(Best Model)*
+![Gate Distribution λ=1e-02](assets/plot_1e-02.png)
+
+#### λ = 1e-01
+![Gate Distribution λ=1e-01](assets/plot_1e-01.png)
+
 ### Sparsity Calculation
 
 ```python
