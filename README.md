@@ -5,6 +5,17 @@ A neural network that learns to prune itself during training using learnable gat
 ## Overview
 
 This project implements a self-pruning neural network for CIFAR-10 image classification. Each weight in the network is associated with a learnable "gate" parameter via sigmoid activation. During training, an L1 regularization term on the gate values encourages them to become zero, effectively pruning unnecessary weights.
+---
+
+## Key Features
+
+- Custom `PrunableLinear` layer with learnable gate parameters  
+- Differentiable pruning using sigmoid-gated weights  
+- L1 sparsity regularization applied during training  
+- Multi-λ experiments demonstrating sparsity–accuracy trade-off  
+- Visualization of gate distributions for pruning analysis  
+
+---
 
 ## Method
 
