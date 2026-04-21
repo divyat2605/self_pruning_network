@@ -100,7 +100,7 @@ The L1 regularization on sigmoid-gated values encourages sparsity through:
 
 ### Network Architecture
 
-The network consists of four hidden layers with the following structure:
+The network consists of three hidden layers followed by an output layer:
 
 1. **Input Layer**: 3072 features (flattened 32×32×3 CIFAR-10 images)
 2. **Hidden Layer 1**: `PrunableLinear(3072, 1024)` → `BatchNorm1d(1024)` → ReLU
@@ -186,7 +186,7 @@ The gate distribution plot shows:
 - **Large spike at 0**: Majority of gates pruned (99.99%)
 - **Cluster away from 0**: Essential gates retained for classification
 
-![Gate Distribution](assets/plot_1e-03.png)
+![Gate Distribution](assets/plot_1e-02.png)
 
 ### Interpretation
 

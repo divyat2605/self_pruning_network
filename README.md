@@ -53,7 +53,7 @@ The L1 norm (sum of absolute values) penalizes the magnitude of gate values. Sin
 
 ### Network Architecture
 
-The network consists of four hidden layers with the following structure:
+The network consists of three hidden layers followed by an output layer:
 
 1. **Input Layer**: 3072 features (flattened 32×32×3 CIFAR-10 images)
 2. **Hidden Layer 1**: `PrunableLinear(3072, 1024)` → `BatchNorm1d(1024)` → ReLU
