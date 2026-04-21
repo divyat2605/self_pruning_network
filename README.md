@@ -35,6 +35,7 @@ The L1 norm (sum of absolute values) penalizes the magnitude of gate values. Sin
 
 | Lambda (λ) | Test Accuracy (%) | Sparsity (%) |
 |------------|-------------------|--------------|
+| 1.0e-04    | 60.57             | 0.00         |
 | 1.0e-03    | 64.03             | 97.09        |
 | 1.0e-02    | 64.11             | 99.99        |
 | 1.0e-01    | 63.38             | 100.00       |
@@ -50,15 +51,20 @@ The L1 norm (sum of absolute values) penalizes the magnitude of gate values. Sin
 
 ### Observations
 
-1. **λ = 1e-3**: Achieved 97% sparsity with the highest accuracy (64.03%). Good balance between pruning and performance.
+1. **λ = 1e-4**: Lowest sparsity (0%) with lower accuracy (60.57%). Insufficient pruning pressure — gates remain active.
 
-2. **λ = 1e-2**: Near-complete pruning (99.99%) with slightly better accuracy (64.11%). Optimal trade-off.
+2. **λ = 1e-3**: Achieved 97% sparsity with the highest accuracy (64.03%). Good balance between pruning and performance.
 
-3. **λ = 1e-1**: Full pruning (100%) but lowest accuracy (63.38%). Over-pruning caused some accuracy loss.
+3. **λ = 1e-2**: Near-complete pruning (99.99%) with slightly better accuracy (64.11%). Optimal trade-off.
+
+4. **λ = 1e-1**: Full pruning (100%) but lowest accuracy (63.38%). Over-pruning caused some accuracy loss.
 
 ## Gate Distribution Plots
 
 The following plots show the final gate value distributions for each λ value:
+
+### λ = 1e-04
+![Gate Distribution](assets/plot_1e-04.png)
 
 ### λ = 1e-03
 ![Gate Distribution](assets/plot_1e-03.png)

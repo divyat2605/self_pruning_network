@@ -124,6 +124,7 @@ Each linear layer is a `PrunableLinear` with BatchNorm1d and ReLU activation bet
 
 | Lambda (λ) | Test Accuracy (%) | Sparsity (%) | Notes |
 |------------|-------------------|--------------|-------|
+| 1.0e-04    | 60.57             | 0.00         | Insufficient pruning pressure |
 | 1.0e-03    | 64.03             | 97.09        | Best accuracy, high sparsity |
 | 1.0e-02    | 64.11             | 99.99        | Near-complete pruning |
 | 1.0e-01    | 63.38             | 100.00       | Full pruning, accuracy drop |
@@ -158,9 +159,23 @@ def calculate_sparsity(model, threshold=1e-2):
 
 ---
 
-## 5. Gate Distribution Analysis
+### Gate Distribution Analysis
 
-### Best Model: λ = 1e-03
+Gate distribution plots for all λ values show the progression from minimal to complete pruning:
+
+#### λ = 1e-04
+![Gate Distribution](assets/plot_1e-04.png)
+
+#### λ = 1e-03
+![Gate Distribution](assets/plot_1e-03.png)
+
+#### λ = 1e-02
+![Gate Distribution](assets/plot_1e-02.png)
+
+#### λ = 1e-01
+![Gate Distribution](assets/plot_1e-01.png)
+
+### Best Model: λ = 1e-02
 
 The gate distribution plot shows:
 - **Large spike at 0**: Majority of gates pruned (99.99%)
