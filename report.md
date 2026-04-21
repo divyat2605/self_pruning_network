@@ -100,11 +100,13 @@ The L1 regularization on sigmoid-gated values encourages sparsity through:
 
 ### Network Architecture
 
-```
-SelfPruningNet: 3072 (flattened 32×32×3) → 1024 → 512 → 256 → 10
-```
+The network consists of four hidden layers with the following structure:
 
-Each linear layer is a `PrunableLinear` with BatchNorm1d and ReLU activation between hidden layers.
+1. **Input Layer**: 3072 features (flattened 32×32×3 CIFAR-10 images)
+2. **Hidden Layer 1**: `PrunableLinear(3072, 1024)` → `BatchNorm1d(1024)` → ReLU
+3. **Hidden Layer 2**: `PrunableLinear(1024, 512)` → `BatchNorm1d(512)` → ReLU
+4. **Hidden Layer 3**: `PrunableLinear(512, 256)` → `BatchNorm1d(256)` → ReLU
+5. **Output Layer**: `PrunableLinear(256, 10)`
 
 ### Training Configuration
 
@@ -121,6 +123,7 @@ Each linear layer is a `PrunableLinear` with BatchNorm1d and ReLU activation bet
 ### Results
 
 #### Results Summary
+
 ![Results Summary](assets/output.jpeg)
 
 #### Experiment Results
@@ -161,17 +164,20 @@ def calculate_sparsity(model, threshold=1e-2):
 
 ---
 
-### Gate Distribution Analysis
+## 5. Gate Distribution Analysis
 
-Gate distribution plots for all λ values show the progression from minimal to complete pruning:
+Gate distribution plots for all λ values demonstrate the progression from minimal to complete pruning:
 
 #### λ = 1e-03
+
 ![Gate Distribution](assets/plot_1e-03.png)
 
 #### λ = 1e-02
+
 ![Gate Distribution](assets/plot_1e-02.png)
 
 #### λ = 1e-01
+
 ![Gate Distribution](assets/plot_1e-01.png)
 
 ### Best Model: λ = 1e-02
@@ -211,7 +217,7 @@ The self-pruning neural network successfully learns to prune itself during train
 3. **Clear trade-off**: Higher λ → more pruning → slightly lower accuracy
 4. **Recommended λ**: 1e-2 for optimal balance (99.99% sparsity, 64.11% accuracy)
 
-The L1 regularization on sigmoid-gated weights effectively identifies and removes unimportant connections while preserving the network's discriminative capability.
+The achievement of 97-100% sparsity with less than 2% accuracy drop demonstrates that the network effectively identifies and removes unimportant connections while preserving its discriminative capability. This validates the self-pruning approach as a viable method for reducing model size during training without significant performance degradation.
 
 ---
 

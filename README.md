@@ -4,7 +4,7 @@ A neural network that learns to prune itself during training using learnable gat
 
 ## Overview
 
-This project implements a self-pruning neural network for CIFAR-10 image classification. Each weight in the network is associated with a learnable "gate" parameter (via sigmoid activation). During training, an L1 regularization term on the gate values encourages them to become zero, effectively pruning unnecessary weights.
+This project implements a self-pruning neural network for CIFAR-10 image classification. Each weight in the network is associated with a learnable "gate" parameter via sigmoid activation. During training, an L1 regularization term on the gate values encourages them to become zero, effectively pruning unnecessary weights.
 
 ## Method
 
@@ -16,22 +16,23 @@ Each standard linear weight is multiplied by a sigmoid-gated value:
 pruned_weight = weight × σ(gate_score)
 ```
 
-Where σ is the sigmoid function mapping gate scores to (0, 1).
+Where σ is the sigmoid function mapping gate scores to the range (0, 1).
 
 ### Why L1 Regularization Encourages Sparsity
 
 The L1 norm (sum of absolute values) penalizes the magnitude of gate values. Since gate values are constrained between 0 and 1 via sigmoid:
 
-1. **Convex optimization**: L1 regularization creates a sparse solution by pushing values to exactly zero (the "corner" of the constraint space)
-2. **Gradient behavior**: The derivative of L1 with respect to gate values is constant, providing a consistent "pull" toward zero
-3. **Thresholding effect**: As training progresses, gates with values near zero remain near zero due to the gradient signal, while important gates stay high
-4. **Trade-off**: Higher λ values increase sparsity but may reduce accuracy by over-pruning important connections
+1. **Convex optimization**: L1 regularization creates a sparse solution by pushing values to exactly zero (the "corner" of the constraint space).
+2. **Gradient behavior**: The derivative of L1 with respect to gate values is constant, providing a consistent "pull" toward zero.
+3. **Thresholding effect**: As training progresses, gates with values near zero remain near zero due to the gradient signal, while important gates stay high.
+4. **Trade-off**: Higher λ values increase sparsity but may reduce accuracy by over-pruning important connections.
 
 **Total Loss**: `Loss = CrossEntropy + λ × Σ(gate_values)`
 
 ## Results
 
 ### Results Summary
+
 ![Results Summary](assets/output.jpeg)
 
 ### Experiment Results (Device: CUDA)
@@ -45,11 +46,20 @@ The L1 norm (sum of absolute values) penalizes the magnitude of gate values. Sin
 ### Training Details
 
 - **Dataset**: CIFAR-10
-- **Architecture**: 3072 → 1024 → 512 → 256 → 10
 - **Epochs**: 50
 - **Batch Size**: 128
 - **Optimizer**: Adam (lr=1e-3)
 - **Sparsity Threshold**: gates < 0.01
+
+### Network Architecture
+
+The network consists of four hidden layers with the following structure:
+
+1. **Input Layer**: 3072 features (flattened 32×32×3 CIFAR-10 images)
+2. **Hidden Layer 1**: `PrunableLinear(3072, 1024)` → `BatchNorm1d(1024)` → ReLU
+3. **Hidden Layer 2**: `PrunableLinear(1024, 512)` → `BatchNorm1d(512)` → ReLU
+4. **Hidden Layer 3**: `PrunableLinear(512, 256)` → `BatchNorm1d(256)` → ReLU
+5. **Output Layer**: `PrunableLinear(256, 10)`
 
 ### Observations
 
@@ -64,12 +74,15 @@ The L1 norm (sum of absolute values) penalizes the magnitude of gate values. Sin
 The following plots show the final gate value distributions for each λ value:
 
 ### λ = 1e-03
+
 ![Gate Distribution](assets/plot_1e-03.png)
 
 ### λ = 1e-02
+
 ![Gate Distribution](assets/plot_1e-02.png)
 
 ### λ = 1e-01
+
 ![Gate Distribution](assets/plot_1e-01.png)
 
 ## Usage
@@ -80,6 +93,7 @@ python self_pruning.py
 ```
 
 The script will:
+
 1. Load CIFAR-10 dataset
 2. Train the self-pruning network for each λ value
 3. Report test accuracy and sparsity
@@ -87,9 +101,9 @@ The script will:
 
 ## Files
 
-- `self_pruning.py` - Main training script with PrunableLinear implementation
-- `assets/` - Generated gate distribution plots
-- `README.md` - This documentation
+- `self_pruning.py` — Main training script with PrunableLinear implementation
+- `assets/` — Generated gate distribution plots
+- `README.md` — This documentation
 
 ## Requirements
 
