@@ -160,13 +160,13 @@ def calculate_sparsity(model, threshold=1e-2):
 
 ## 5. Gate Distribution Analysis
 
-### Best Model: λ = 1e-02
+### Best Model: λ = 1e-03
 
 The gate distribution plot shows:
 - **Large spike at 0**: Majority of gates pruned (99.99%)
 - **Cluster away from 0**: Essential gates retained for classification
 
-![Gate Distribution](assets/plot_1e-02.png)
+![Gate Distribution](assets/plot_1e-03.png)
 
 ### Interpretation
 
